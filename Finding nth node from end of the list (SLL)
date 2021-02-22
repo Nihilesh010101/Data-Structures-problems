@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    int data;
+    struct node *next;
+}*head=NULL;
+
+void insert(){
+  struct node *p,*q,*new_node;
+  int position,data_new;
+  printf("\nEnter the data to be inserted: ");
+  scanf("%d",&data_new);
+  printf("Enter the position of the node:");
+  scanf("%d",&position);
+  new_node=(struct node *)malloc(sizeof(struct node));
+  new_node->data=data_new;
+  p=head;
+  if((position==1)||(head==NULL)){
+      new_node->next=head;
+      head=new_node;
+  }
+  else
+  {
+      position--;
+  while(position-- && p!=NULL)
+  {
+    q=p;
+    p=p->next;
+    
+  }
+  new_node->next=p;
+  q->next=new_node;
+      
+  }
+}
+
+void delete()
+{
+  struct node *p,*q;
+  int place;
+  printf("\nEnter the position of the node to be deleted: ");
+  scanf("%d",&place);
+  p=head;
+  if(head==NULL)
+  printf("\n list is empty");
+  else if(place==1){
+      head=head->next;
+      free(p);
+  }
+  else
+  {   place--;
+      while(place-- && p->next!=NULL)
+      {
+          q=p;
+          p=p->next;
+      }
+    if(place>0) printf("Position does not exist");
+    else{
+    q->next=p->next;
+    free(p);
+    }
+  }
+}
+
+
+
+
+void display()
+{
+    struct node *p;
+    p=head;
+    while(p!=NULL){
+        printf("%d-->",p->data);
+        p=p->next;
+    }
+    printf("NULL");
+}
+
+void find_nth_node_from_end(){
+    int position;
+    printf("\nEnter the postion of the data from back of the list: ");
+    scanf("%d",&position);    
+    struct node *required_node=NULL, *temp=head;
+    for(int count=1;count<position;count++){
+        if(temp) temp=temp->next;
+    }
+    while(temp){
+        if(required_node == NULL)
+            required_node=head;
+        else
+            required_node=required_node->next;
+        temp=temp->next;
+    }
+    if(required_node)
+    printf("The data is: %d",required_node->data);
+    else
+    printf("NULL");
+}
+
+
+int main()
+{
+    insert();
+    display();
+    insert();
+    display();
+    insert();
+    display();
+    find_nth_node_from_end();
+    find_nth_node_from_end();
+    return 0;
+}
